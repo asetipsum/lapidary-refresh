@@ -49,6 +49,22 @@ class MastodonClient {
       });
     }
   }
+  reboost(message, cb){
+    if (this.client){
+      console.log('tooting...');
+      this.client.post('statuses/:id/reblog', { id: message.data.status.id }, (err, data, response) => {
+        if (err){
+          console.log('mastodon.reboost error:', err);
+        } else {
+          console.log('reboosted', data.url);
+        }
+
+        if (cb){
+          cb(err, data);
+        }
+      });
+    }
+  }
   poll(text, options, cb){
     if (this.client){
       console.log('posting a poll...');
